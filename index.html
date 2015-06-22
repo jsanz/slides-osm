@@ -14,7 +14,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="stylesheet" href="reveal/css/reveal.min.css">
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
     <link rel="stylesheet" href="css/sky_osgeo.css" id="theme">
 
     <!-- For syntax highlighting -->
@@ -26,7 +26,7 @@
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'css/print/pdf.css';
+        link.href = 'reveal.js/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
       }
     </script>
@@ -845,8 +845,8 @@ max_lat="41.5859881" max_lon="2.0241229"&gt;
 
     </div>
 
-    <script src="reveal/lib/js/head.min.js"></script>
-    <script src="reveal/js/reveal.min.js"></script>
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
     <script src="scripts/jquery-2.1.0.min.js"></script>
     <script src="scripts/hs/highlight.pack.js"></script>
 
@@ -872,10 +872,10 @@ max_lat="41.5859881" max_lon="2.0241229"&gt;
 
         // Optional libraries used to extend on reveal.js
         dependencies: [
-          { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
           { src: 'scripts/hs/highlight.plugin.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          { src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-          { src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
         ]
       });
 
