@@ -1,9 +1,10 @@
-OSM no es un mapa, es una base de datos
+Charlas sobre [OSM](http://osm.org)
 ============================================
 
-Charla sobre [OSM](http://osm.org) para [El Hackatón](http://elhackaton.com/)
+## OSM no es un mapa, es una base de datos
 
-* [Diapositivas](http://bit.ly/elhackaton-osm)
-* [Enlaces y referencias](https://gist.github.com/jsanz/9648322/)
+* [Diapositivas](http://bit.ly/jsanz-osm)
+* [Enlaces y referencias](https://gist.github.com/jsanz/3afcea05186f6a3667a5)
+
 
 [Jorge Sanz](http://jorgesanz.net)
