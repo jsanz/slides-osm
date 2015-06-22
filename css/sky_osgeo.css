@@ -93,7 +93,12 @@ body {
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   font-size: 3em;
 }
-
+.reveal h2{
+  font-size: 2.11em;
+}
+.reveal h3{
+  font-size: 1.55em;
+}
 /*********************************************
  * LINKS
  *********************************************/
@@ -199,4 +204,49 @@ body {
 
 .reveal section pre code{
   padding: 10px;
+}
+
+
+.reveal ul {
+  list-style-type: disc;
+}
+.reveal ol, .reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+
+.reveal ol li, .reveal ul li{
+  line-height: normal;
+}
+
+.reveal strong, .reveal b {
+  font-weight: 700;
+}
+.reveal em, .reveal i {
+  font-style: italic;
+}
+.reveal ul ul, .reveal ul ol, .reveal ol ol, .reveal ol ul {
+  display: block;
+  margin-left: 40px;
+}
+.reveal ul ul {
+  list-style-type: square;
+}
+
+.reveal img{
+  max-height: 600px;
+}
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 15px auto;
+  text-align: left;
+  font-size: .55em;
+  font-family: monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0 0 6px rgba(0,0,0,.3);
 }
