@@ -30,7 +30,7 @@ Los datos de OSM tienen diferentes resoluciones y completitud
 - Experiencia previa en VGI: _The National Map Corps_
 - Proyecto piloto en 2010: [OSMCP](http://nationalmap.gov/TheNationalMapCorps/pilot.html)
 
-----
+---
 
 ## Dudas
 
@@ -42,7 +42,7 @@ Los datos de OSM tienen diferentes resoluciones y completitud
  - p.ej. OSM y Wikipedia operan de forma distinta
 - Cómo integrar información de voluntarios con información _oficial_
 
-----
+---
 
 ## Dudas
 
@@ -59,7 +59,7 @@ Los datos de OSM tienen diferentes resoluciones y completitud
 
 > Tras evaluar diferentes opciones se decide utilizar el stack tecnológico de OSM
 
-----
+---
 
 ## Aspectos positivos
 
@@ -67,7 +67,7 @@ Los datos de OSM tienen diferentes resoluciones y completitud
 - OSM es un stack relativamente fácil de usar y configurar
 - Edición multiusuario bien resuelta
 
-----
+---
 
 ## Aspectos negativos:
 
@@ -82,13 +82,13 @@ Los datos de OSM tienen diferentes resoluciones y completitud
 
 ---
 
-## El proyecto cinco años después
+## 5 años después
 
 ![The National Map Corps](map-corps.png)
 
-----
+---
 
-## El proyecto cinco años después
+## 5 años después
 
 - [The National Map Corps](http://nationalmap.gov/TheNationalMapCorps/)
 - [Wiki](https://my.usgs.gov/confluence/display/nationalmapcorps/Home)
@@ -114,7 +114,7 @@ Los datos de OSM tienen diferentes resoluciones y completitud
 - No solo se trata de _aprovechar_ los datos generados por usuarios
 - El verdadero reto es conseguir generar una comunidad interesada en **colaborar**
 
-----
+---
 
 ## Ejemplos de actividades:
 
