@@ -1,7 +1,7 @@
 # Sinergias OSM-IGN
 
 - Jorge Sanz · jsanz@cartodb.com
-- 13 de Noviembre de 2013
+- 13 de Noviembre de 2015
 - Instituto Geográfico Nacional
 
 ---
