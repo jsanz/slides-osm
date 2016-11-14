@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="es">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>OSM is a database, not a map</title>
+
+    <meta name="description" content="Talk about OSM">
+    <meta name="author" content="Jorge Sanz">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="../css/sky_osgeo.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="../scripts/hs/styles/solarized_light.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '../reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <div class="slides">
+        <!-- Portada y previa -->
+        <section>
+          <section>
+            <h1>OSM is a database, not a map</h1>
+            <p class="monospace">
+              <a href="http://bit.ly/jsanz-osm">http://bit.ly/jsanz-osm</a>
+            </p>
+          </section>
+          <section>
+            <h2><a href="http://jorgesanz.net">Jorge Sanz</a></h2>
+            <ul>
+              <li class="monospace"><a href="http://twitter.com/xurxosanz">@xurxosanz</a></li>
+              <li>Engineer at <a href="http://cartodb.com">CartoDB</a></li>
+              <li><a href="http://wiki.osgeo.org/wiki/Jorge_Sanz">OSGeo</a> member</li>
+              <li><a href="http://valencia.geoinquietos.org">Geoinquietos Valencia</a> organizer</li>
+              <li><em><a href="http://hdyc.neis-one.org/?XuRxO">Casual mapper</a></em> on <a href="http://www.openstreetmap.org/user/XuRxO"> OSM</a></li>
+            </ul>
+          </section>
+          <section class="bookmark">
+            <iframe width="800" height="450" src="https://www.youtube.com/embed/7sC83j6vzjo" frameborder="0" allowfullscreen></iframe>
+
+          </section>
+
+        </section>
+
+        <!-- Introduccíón a OSM -->
+        <section>
+          <section>
+            <h2>First part</h2>
+            <h3>What's OpenStreetMap?</h3>
+
+            <img src="imgs/osm-logo.png">
+          </section>
+          <section>
+            <h2>What's OpenStreetMap</h2>
+            <ul>
+              <li>Open Source and Open Data <br/>
+                  enthusiasts <strong>community</strong></li>
+              <li class="fragment">
+                A <strong>project</strong> to create the best <br/>
+                geographic reference world database</li>
+              <li class="fragment">An Internet map?</li>
+              <li class="fragment"> <strong>¡No!</strong> ¡There's many!</li>
+              <li class="fragment">
+                But not just maps, there's a huge ecosystem<br/>
+                of companies and services around OSM</li>
+            </ul>
+          </section>
+
+          <section>
+            <img src="imgs/bbaa/osm-view.png" alt="Ver" style="max-height:600px;">
+            <p><a href="http://www.openstreetmap.org/#map=19/36.83701/-2.46378">Navigate</a></p>
+          </section>
+
+          <section>
+            <img src="imgs/bbaa/osm-query.png" alt="Consultar" style="max-height:600px;">
+            <p><a href="https://www.openstreetmap.org/way/159010347#map=19/36.83712/-2.46415">Query</a></p>
+          </section>
+
+          <section>
+            <img src="imgs/bbaa/osm-edit.png" alt="Editar" style="max-height:600px;">
+            <p>Edit</p>
+          </section>
+
+          <section>
+            <img src="imgs/bbaa/osm-improve.png" alt="Mejorar" style="max-height:600px;">
+            <p><a href="https://www.openstreetmap.org/api/0.6/changeset/21196864/download">Improve!</a></p>
+          </section>
+
+          <section>
+            <h2>But Google Maps...</h2>
+
+            <a href="http://www.flickr.com/photos/18789396@N00/144251305/" title=
+              "chris' mouth is just the right size by unk's dump truck, on Flickr">
+              <img src="imgs/chris-mouth.jpg" alt="chris' mouth is just the right size" style="width:60%;" />
+            </a>
+
+            <ul>
+              <li>API: ads, usage restrictions, ...</li>
+              <li>MapMaker: <em>«your work is
+              <strong>ours</strong>»</em> (being retired!)</li>
+            </ul>
+          </section>
+
+          <section>
+            <p><img src="imgs/map_maker_pissing.png" alt="Pissing"></p>
+          </section>
+
+          <section class="bookmark">
+            <h2>Open Database License</h2>
+            <ul>
+              <li>OSM official license since Sept, 2012,<br/>previously CC-BY-SA</li>
+              <li class="fragment">Developed by the <a href="http://okfn.org/">OKFN</a></li>
+              <li class="fragment">Shortly:
+                <ul>
+                  <li><strong>You can:</strong> share, create, adapt</li>
+                  <li><strong>If you:</strong> attribute, share-alike, always open</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          <section class="bookmark">
+            <h2>History 1/3</h2>
+
+            <ul style="font-size:0.8em;">
+              <li>2004 - <a href="https://es.wikipedia.org/wiki/Steve_Coast">Steve Coast</a> starts OpenStreetMap as an answer <br/>
+                to the high pricing of the <a href="https://es.wikipedia.org/wiki/Ordnance_Survey">Ordnance Survey</a> data</li>
+              <li>2006 - <em>OpenStreetMap Foundation</em> starts operating,<br/>
+                 non profit organization in England</li>
+              <li>2006 - Yahoo! grants their imagery to be used by OSM</li>
+              <li>2007 - Automotive Navigation Data donates their data <br/>
+                for Netherlands, India and China</li>
+              <li>2007 - TIGER USO dataset is totally imported</li>
+              <li>2007 - 9.000 registered users</li>
+            </ul>
+          </section>
+          <section class="bookmark">
+            <h2>History 2/3</h2>
+
+            <ul style="font-size:0.8em;">
+              <li>2008 - CloudMade <em> donates 2,4M$</em> to the OSMF</li>
+              <li>2008 - 45.000 registered users</li>
+              <li>2008 - GeoBase.ca  donates their public dataset</li>
+              <li>2009 - 0.6 version of the API. 200.000 users</li>
+              <li>2010 - Haiti earthquake. In just two days OSM is <br/>
+                <a href ="https://en.wikipedia.org/wiki/OpenStreetMap#cite_note-nytimes-47">considered</a>the best digital map of the country</li>
+              <li>2010 - Bing Maps grants to use their imagery</li>
+            </ul>
+          </section>
+          <section class="bookmark">
+            <h2>History 3/3</h2>
+
+            <ul style="font-size:0.8em;">
+              <li>2011 - +500.000 users. +1.000.000.000 nodes</li>
+              <li>2012 - License change to <em>ODbl</em>, <a href="https://switch2osm.org/">#swith2osm</a> campaign</li>
+              <li>2012 - Many companies switching to OSM:<br/>
+                Foursquare, Craiglist, Apple,...</li>
+              <li>2013 - One million users. After Yolanda Typhoon <br/>
+                OSM community shows its importance on humanitarian tasks</li>
+              <li>2014 - +1.5M users. OSM goes mainstream</li>
+              <li>2015 - 2 million users</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Figures</h2>
+            <ul>
+              <li>3.2M users</li>
+              <li>5.426M GPS points</li>
+              <li>3.592M nodes</li>
+              <li>375M ways</li>
+              <li>4,5M relations</li>
+              <li><a href="http://www.openstreetmap.org/stats/data_stats.html">Source</a> (2016/11/13)</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Comparing...</h2>
+          </section>
+
+          <section>
+            <img src="imgs/map_compare_caja_magica.png" alt="OpenStreetMap vs Google Maps en la Caja Mágica" />
+            <p>Source: <a href="http://tools.geofabrik.de/mc/#16/40.3715/-3.6844&num=2&mt0=mapnik&mt1=google-map">GeoFrabrik Tools</a></p>
+          </section>
+          <section>
+            <img src="imgs/map_compare_Burgos.png" alt="OpenStreetMap vs Google Maps en Burgos" />
+              <p>Source: <a href="http://tools.geofabrik.de/mc/#12/42.3547/-3.6976&num=2&mt0=mapnik&mt1=google-map">GeoFrabrik Tools</a></p>
+          </section>
+          <section>
+            <img src="imgs/map_compare_Puerta_Brandemburgo.png" alt="OpenStreetMap vs Google Maps en la Puerta de Brandemburgo" />
+              <p>Source: <a href="http://tools.geofabrik.de/mc/#15/52.5159/13.3779&num=2&mt0=mapnik&mt1=google-map">GeoFrabrik Tools</a></p>
+          </section>
+          <section>
+            <img src="imgs/map_compare_Haiti.png" alt="OpenStreetMap vs Google Maps en Haiti" />
+            <p>Source: <a href="http://tools.geofabrik.de/mc/#11/18.5735/-72.2678&num=2&mt0=mapnik&mt1=google-map">GeoFrabrik Tools</a></p>
+          </section>
+
+          <section class="bookmark">
+            <h2>HOT</h2>
+
+            <p><a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a></p>
+
+            <ul class="discs larger">
+              <li>Created after Haiti <strong>earthquake</strong> (2010/01)</li>
+
+              <li>Training and outreach in development zones</li>
+
+              <li>Mostly remote mapping</li>
+
+              <li>Development projects in Nepal, Malawi,<br/>
+                Indonesia, Nigeria, ... </li>
+            </ul>
+
+            <p style="text-align:center;margin-top:20px;"><a href=
+            "http://hot.openstreetmap.org/" target="_blank"><img src="imgs/hot.jpg"
+            height="200" alt="HOT" /></a></p>
+          </section>
+
+          <section>
+            <img style="max-height:500px;" src="imgs/map_compare-tacloban.png" alt="Filipinas">
+            <p><a href="http://tools.geofabrik.de/mc/?lon=125.00151&lat=11.24581&zoom=17&num=2&mt0=mapnik&mt1=google-map">Tacloban</a> ·
+              <a href="http://wiki.openstreetmap.org/wiki/Typhoon_Haiyan">wiki</a> · <a href="http://resultmaps.neis-one.org/osm-typhoon-haiyan-2013/#8/11.682/122.953">changes map</a>
+              <br/> 4.8M changes in less than 3 weeks!</p>
+          </section>
+
+        </section>
+        <!-- fin de la intro -->
+
+        <!-- Cómo contribuir a OSM -->
+        <section>
+          <section>
+            <h2>Second part</h2>
+            <h3>How to contribute to OSM</h3>
+
+            <img src="imgs/working.gif" alt="Working" style="width:350px;">
+          </section>
+          <section>
+            <h2>Main workflow</h2>
+            <ol>
+              <li class="fragment">Data collection</li>
+              <li class="fragment">OSM upload</li>
+            </ol>
+          </section>
+
+          <section class="bookmark">
+            <h2>GPS data collection</h2>
+            <img src="imgs/contrib/map-hanoi.jpg" width="900" height="453"
+            alt="Mapping party en Hanoi">
+          </section>
+
+          <section class="bookmark">
+            <h2>Field Papers</h2>
+            <a href="http://www.flickr.com/photos/kachkaev/5710460686/" title=
+            "2011-05-10 (0010) by Alexander Kachkaev, on Flickr">
+              <img src="imgs/contrib/field-paper.jpg" width=
+            "640" alt="2011-05-10 (0010)"></a>
+          </section>
+
+          <section class="bookmark">
+            <h2>Mapping party</h2>
+            <a href="http://www.flickr.com/photos/xurxosanz/7243397808/"
+            title="Parc Agrari mappers by XuRxO, on Flickr">
+            <img src="imgs/contrib/parc-agrari-1.jpg"
+             width="640" alt="Parc Agrari mappers"></a>
+
+             <p>Getting ready</p>
+          </section>
+
+          <section>
+            <h2>Mapping party</h2>
+            <a class="noframe" href="https://plus.google.com/photos/100055577411751485036/albums/5745100471214038145/5745101251225765538">
+            <img src="imgs/contrib/parc-agrari-2.jpg"
+             alt="Treballant al parc agrari"></a>
+
+             <p>Back to the office for editing</p>
+          </section>
+
+          <section class="bookmark">
+            <h2>OSM editors</h2>
+
+            <ul>
+              <li>iD
+                <ul>
+                  <li>JavaScript (d3js)</li>
+                  <li>used directly at OSM site</li>
+                  <li>casual or basic editors</li>
+                </ul>
+              </li>
+              <li>JOSM
+                <ul>
+                  <li>desktop, Java</li>
+                  <li>lots of features, plugins, etc</li>
+                  <li>advanced users</li>
+                </ul>
+              </li>
+              <li>... and <a href="http://wiki.openstreetmap.org/wiki/Editing"
+              target="_blank" title="Editores">many more</a> (even for mobile devices)</li>
+            </ul>
+          </section>
+
+          <section>
+            <img src="imgs/contrib/josm.png" alt="JOSM" width="640">
+            <p>Almería Arts school in JOSM</p>
+          </section>
+        </section>
+
+        <!-- FIN Cómo contribuir a OSM -->
+
+        <!-- Los datos en OSM -->
+        <section>
+          <section>
+            <h2>Third part</h2>
+            <h3>Data in OSM</h3>
+
+
+            <img src="imgs/strategy.gif" alt="Strategy" style="width:450px;">
+          </section>
+
+          <section>
+            <h2>OSM data model</h2>
+            <ul>
+              <li><strong>Topological</strong> instead of <em>features</em></li>
+              <li><strong>Graphic</strong> primitives
+                <ul>
+                  <li>Nodes</li>
+                  <li>Ways (if they are closed they <em>may</em> be an area)</li>
+                </ul>
+              </li>
+              <li><strong>Alphanumeric</strong> attributes
+                <ul>
+                  <li>Relations</li>
+                  <li>Labels</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+             <h2>Labels</h2>
+            <ul class="">
+              <li>Provide <strong>semantic</strong> to the graphic primitives<br>
+              and relations</li>
+
+              <li><strong>Crowsourced</strong> and edited at the <a href=
+              "http://wiki.openstreetmap.org/wiki/Map_Features" target="_blank"
+              title="MapFeatures">wiki</a></li>
+            </ul>
+
+            <p class="center"><a class="noframe" href=
+            "http://wiki.openstreetmap.org/wiki/Map_Features" target="_blank" title=
+            "MapFeatures"><img class="figure" src="imgs/dev/map-features.png" width="500"
+            alt="MapFeatures"></a></p>
+          </section>
+          <section>
+            <h2>Nodes</h2>
+
+            <ul class="">
+              <li>Relevant attributes: id, latitude y longitude,
+                  creator and version</li>
+              <li>Content: labels</li>
+            </ul>
+
+            <p class="">
+              <img class="figure" src="imgs/dev/node.png" width="500"
+            alt="Un nodo"></p>
+          </section>
+          <section>
+            <pre><code>
+&lt;node id=&quot;1035862914&quot; visible=&quot;true&quot; version=&quot;1&quot;
+        changeset=&quot;6637923&quot; timestamp=&quot;2010-12-12T16:07:17Z&quot;
+        user=&quot;Schumi4ever&quot; uid=&quot;83942&quot;
+        lat=&quot;36.8371080&quot; lon=&quot;-2.4644590&quot;&gt;
+    &lt;tag k=&quot;natural&quot; v=&quot;tree&quot;/&gt;
+&lt;/node&gt;
+            </code></pre>
+            <!--<img src="imgs/dev/xml-node.png" alt="Node">-->
+            <p><a href="https://www.openstreetmap.org/api/0.6/node/1035862914">https://www.openstreetmap.org/api/0.6/node/1035862914</a></p>
+          </section>
+          <section>
+            <h2>Ways</h2>
+
+            <ul class="">
+              <li>Attributes: id, user, version</li>
+              <li>Content: list of nodes and labels</li>
+            </ul>
+
+            <p class="">
+              <img class="figure" src="imgs/dev/way.png" width="500"
+            alt="Una vía"></p>
+          </section>
+          <section>
+            <pre><code data-trim>
+&lt;way id=&quot;159010347&quot; visible=&quot;true&quot; version=&quot;2&quot;
+        changeset=&quot;21196864&quot; timestamp=&quot;2014-03-19T18:09:16Z&quot;
+        user=&quot;XuRxO&quot; uid=&quot;13409&quot;&gt;
+    &lt;nd ref=&quot;1711177810&quot;/&gt; &lt;nd ref=&quot;1711177809&quot;/&gt;
+     &lt;-- más nodos... --&gt;
+    &lt;nd ref=&quot;1711177808&quot;/&gt; &lt;nd ref=&quot;1711177812&quot;/&gt;
+    &lt;nd ref=&quot;1711177810&quot;/&gt;
+    &lt;tag k=&quot;addr:city&quot; v=&quot;Almer&#237;a&quot;/&gt;
+    &lt;tag k=&quot;addr:postcode&quot; v=&quot;04001&quot;/&gt;
+    &lt;tag k=&quot;addr:street&quot; v=&quot;Plaza Pablo Cazard&quot;/&gt;
+    &lt;tag k=&quot;amenity&quot; v=&quot;college&quot;/&gt;
+    &lt;tag k=&quot;building&quot; v=&quot;school&quot;/&gt;
+    &lt;tag k=&quot;name&quot; v=&quot;Escuela de Bellas Artes&quot;/&gt;
+    &lt;tag k=&quot;phone&quot; v=&quot;+34950156158&quot;/&gt;
+    &lt;tag k=&quot;website&quot; v=&quot;http://www.andalucia.org/....&quot;/&gt;
+&lt;/way&gt;
+            </code></pre>
+            <p><a href="https://www.openstreetmap.org/api/0.6/way/159010347">https://www.openstreetmap.org/api/0.6/way/159010347</a></p>
+
+          </section>
+          <section>
+            <h2>Relations</h2>
+
+            <ul class="">
+              <li>Attributes: id, visible, user and timestamp</li>
+              <li>Content
+                <ul>
+                  <li>Members: id, type and relation role</li>
+                  <li>Labels</li>
+                </ul>
+              </li>
+            </ul>
+
+            <p class="">
+              <img class="figure" src="imgs/dev/relation.png" width="650"
+            alt="Una relación"></p>
+          </section>
+          <section>
+            <pre><code>
+&lt;relation id=&quot;2545358&quot; visible=&quot;true&quot; version=&quot;9&quot; ...&gt;
+    &lt;member type=&quot;node&quot; ref=&quot;2306864392&quot; role=&quot;stop&quot;/&gt;
+    &lt;member type=&quot;node&quot; ref=&quot;2306864403&quot; role=&quot;stop&quot;/&gt;
+    &lt;!-- m&#225;s paradas ... --&gt;
+    &lt;member type=&quot;way&quot; ref=&quot;204274848&quot; role=&quot;forward&quot;/&gt;
+    &lt;member type=&quot;way&quot; ref=&quot;23290865&quot; role=&quot;forward&quot;/&gt;
+    &lt;!-- m&#225;s v&#237;as ... --&gt;
+    &lt;tag k=&quot;colour&quot; v=&quot;black&quot;/&gt;
+    &lt;tag k=&quot;name&quot; v=&quot;Casco Hist&#243;rico&quot;/&gt;
+    &lt;tag k=&quot;operator&quot; v=&quot;SURBUS&quot;/&gt;
+    &lt;tag k=&quot;ref&quot; v=&quot;1&quot;/&gt;
+    &lt;tag k=&quot;route&quot; v=&quot;bus&quot;/&gt;
+    &lt;tag k=&quot;type&quot; v=&quot;route&quot;/&gt;
+    &lt;tag k=&quot;wheelchair&quot; v=&quot;yes&quot;/&gt;
+&lt;/relation&gt;
+            </code></pre>
+            <p><a href="https://www.openstreetmap.org/api/0.6/relation/2545358">https://www.openstreetmap.org/api/0.6/relation/2545358</a></p>
+          </section>
+        </section>
+        <!-- FIN los datos en OSM -->
+
+        <!-- OSM para desarrolladores -->
+        <section>
+          <section>
+            <h2>Fourth part</h2>
+            <h3>OSM for developers</h3>
+
+            <img src="imgs/happy.gif" alt="Happy" style="width:250px;">
+          </section>
+
+
+          <section>
+            <img class="figure" src="imgs/dev/dev-mapping-software.png" alt="Mapping Software">
+          </section>
+
+          <section>
+            <h2>OSM API</h2>
+            <ul>
+              <li>Only mean to <strong>modify</strong> data</li>
+
+              <li><a href="http://wiki.openstreetmap.org/wiki/API_v0.6" target=
+              "_blank" title="API 0.6">v0.6</a> since 2009</li>
+
+              <li>RESTful</li>
+
+              <li>Anonymous queries, <br/> updates using <strong>OAuth</strong></li>
+
+              <li><strong>Versioning</strong></li>
+
+              <li>Downloads limited<br>
+              to <strong>15'</strong> squares</li>
+              <li>It focuses on <strong>editing</strong> not downloading</li>
+            </ul>
+          </section>
+
+          <section>
+            <pre><code>
+&lt;osm version="0.6" generator="OpenStreetMap server"&gt;
+&lt;api&gt;
+&lt;version minimum="0.6" maximum="0.6"/&gt;
+&lt;area maximum="0.25"/&gt;
+&lt;tracepoints per_page="5000"/&gt;
+&lt;waynodes maximum="2000"/&gt;
+&lt;changesets maximum_elements="50000"/&gt;
+&lt;timeout seconds="300"/&gt;
+&lt;/api&gt;
+&lt;/osm&gt;
+            </code></pre>
+            <p><a href=
+      "http://api.openstreetmap.org/api/capabilities">http://api.openstreetmap.org/api/capabilities</a></p>
+          </section>
+          <section>
+            <pre><code>
+&lt;osm version="0.6" generator="OpenStreetMap server"&gt;
+&lt;node id="933346497" lat="41.5827283" lon="2.013415"
+version="3" changeset="8211372" user="Jaume Figueras"
+uid="55987" visible="true" timestamp="2011-05-21T22:26:13Z"&gt;
+&lt;tag k="ref" v="FIXME"/&gt;
+&lt;tag k="network" v="Xarxa d'autobusos Urbans de Terrassa"/&gt;
+&lt;tag k="covered" v="no"/&gt;
+&lt;tag k="tactile_paving" v="yes"/&gt;
+&lt;tag k="bench" v="yes"/&gt;
+&lt;tag k="public_transport" v="platform"/&gt;
+&lt;tag k="highway" v="bus_stop"/&gt;
+&lt;tag k="uic_ref" v="FIXME"/&gt;
+&lt;tag k="uic_name" v="FIXME"/&gt;
+&lt;tag k="name" v="Arenys de Mar"/&gt;
+&lt;tag k="shelter" v="yes"/&gt;
+&lt;tag k="operator" v="TMESA"/&gt;
+&lt;tag k="layer" v="0"/&gt;
+&lt;/node&gt;
+&lt;/osm&gt;
+            </code></pre>
+            <p><a href=
+            "http://api.openstreetmap.org/api/0.6/node/933346497">http://api.openstreetmap.org/api/0.6/node/933346497</a></p>
+          </section>
+
+          <section>
+            <pre><code>
+&lt;osm version="0.6" generator="OpenStreetMap server"&gt;
+&lt;node id="933346497" lat="41.5827339" lon="2.0134288" changeset="5928981"
+user="Jaume Figueras" uid="55987" visible="true" timestamp="2010-10-01T15:46:00Z" version="1"&gt;
+&lt;tag k="highway" v="bus_stop"/&gt;
+&lt;tag k="shelter" v="yes"/&gt;
+&lt;tag k="name" v="Arenys de Mar"/&gt;
+&lt;tag k="tactile_paving" v="yes"/&gt;
+&lt;tag k="bench" v="yes"/&gt;
+&lt;/node&gt;
+&lt;node id="933346497" lat="41.5827339" lon="2.0134288" changeset="8167041"
+user="Jaume Figueras" uid="55987" visible="true" timestamp="2011-05-16T21:38:38Z" version="2"&gt;
+&lt;tag k="highway" v="bus_stop"/&gt;
+&lt;tag k="shelter" v="yes"/&gt;
+&lt;tag k="network" v="Xarxa d'autobusos Urbans de Terrassa"/&gt;
+&lt;tag k="name" v="Arenys de Mar"/&gt;
+&lt;tag k="ref" v="FIXME"/&gt;
+&lt;tag k="uic_name" v="FIXME"/&gt;
+&lt;tag k="tactile_paving" v="yes"/&gt;
+&lt;tag k="layer" v="0"/&gt;
+&lt;tag k="covered" v="no"/&gt;
+&lt;tag k="public_transport" v="platform"/&gt;
+&lt;tag k="uic_ref" v="FIXME"/&gt;
+&lt;tag k="bench" v="yes"/&gt;
+&lt;tag k="operator" v="TMESA"/&gt;
+&lt;/node&gt;
+&lt;node id="933346497" lat="41.5827283" lon="2.013415" changeset="8211372"
+user="Jaume Figueras" uid="55987" visible="true" timestamp="2011-05-21T22:26:13Z" version="3"&gt;
+&lt;tag k="highway" v="bus_stop"/&gt;
+&lt;tag k="shelter" v="yes"/&gt;
+&lt;tag k="network" v="Xarxa d'autobusos Urbans de Terrassa"/&gt;
+&lt;tag k="name" v="Arenys de Mar"/&gt;
+&lt;tag k="ref" v="FIXME"/&gt;
+&lt;tag k="uic_name" v="FIXME"/&gt;
+&lt;tag k="tactile_paving" v="yes"/&gt;
+&lt;tag k="layer" v="0"/&gt;
+&lt;tag k="covered" v="no"/&gt;
+&lt;tag k="public_transport" v="platform"/&gt;
+&lt;tag k="uic_ref" v="FIXME"/&gt;
+&lt;tag k="bench" v="yes"/&gt;
+&lt;tag k="operator" v="TMESA"/&gt;
+&lt;/node&gt;
+&lt;/osm&gt;
+            </code></pre>
+            <p><a href=
+            "http://api.openstreetmap.org/api/0.6/node/933346497/history">http://api.openstreetmap.org/api/0.6/node/933346497/history</a></p>
+          </section>
+          <section>
+            <pre><code>
+&lt;osm version="0.6" generator="OpenStreetMap server"&gt;
+&lt;changeset id="8211372" user="Jaume Figueras"
+uid="55987" created_at="2011-05-21T22:26:04Z"
+closed_at="2011-05-21T22:26:17Z" open="false"
+min_lat="41.5617613" min_lon="2.0082875"
+max_lat="41.5859881" max_lon="2.0241229"&gt;
+&lt;tag k="comment" v="Bus de Terrassa - Línia 7 adaptada al nou esquema i arranjaments varis"/&gt;
+&lt;tag k="created_by" v="JOSM/1.5 (4064 en)"/&gt;
+&lt;/changeset&gt;
+&lt;/osm&gt;
+            </code></pre>
+            <p><a href=
+            "http://api.openstreetmap.org/api/0.6/changeset/8211372">http://api.openstreetmap.org/api/0.6/changeset/8211372</a></p>
+          </section>
+          <section>
+            <pre><code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;osm version="0.6" generator="CGImap 0.0.2"&gt;
+        &lt;bounds minlat="41.5617613" minlon="2.0082875"
+                maxlat="41.5859881" maxlon="2.0241229"/&gt;
+        &lt;node id="282873786" lat="41.5803041" lon="2.0268698"
+                user="Jaume Figueras" uid="55987" visible="true"
+                version="5" changeset="1576508" timestamp="2009-06-20T17:59:37Z"&gt;
+                        &lt;tag k="highway" v="traffic_signals"/&gt;
+        &lt;/node&gt;
+        &lt;node id="282873797" lat="41.5805069" lon="2.0266905"
+                user="Jaume Figueras" uid="55987" visible="true"
+                version="6" changeset="5858775" timestamp="2010-09-23T23:30:09Z"&gt;
+                        &lt;tag k="highway" v="traffic_signals"/&gt;
+        &lt;/node&gt;
+....
+            </code></pre>
+            <p><a href=
+            "http://api.openstreetmap.org/api/0.6/map?bbox=2.0082875,41.5617613,2.0241229,41.5859881">
+            http://api.openstreetmap.org/api/0.6/map?bbox=2.0082875,41.5617613,2.0241229,41.5859881</a><br/>
+            1.6MB download</p>
+          </section>
+          <section>
+           <h2>Data update</h2>
+
+          <ul class="monospace">
+            <li>PUT /api/0.6/changeset/create</li>
+            <li>PUT /api/0.6/changeset/#id/close</li>
+            <li>PUT /api/0.6/[N|W|R]/create</li>
+            <li>DELETE /api/0.6/[N|W|R]/#id</li>
+          </ul>
+
+          <h2>Other queries</h2>
+
+          <ul class="monospace">
+            <li>GET /api/0.6/[N|W|R]/#id/relations</li>
+            <li>GET /api/0.6/node/#id/ways</li>
+            <li>GET /api/0.6/[W|R]/#id/full</li>
+          </ul>
+          </section>
+
+          <section><img src="imgs/dev/dev-tiles.png" alt="Tiles" class="figure"></section>
+
+          <section>
+            <h2>Other derived services</h2>
+          </section>
+
+          <section>
+            <ul>
+              <li>Main derived product is called the
+                  <em><a href="http://planet.openstreetmap.org/">planet</a></em>
+                <ul>
+                  <li>Full DB export: 53GB in a single compressed XML</li>
+                  <li>Weekly, day, hour and minute diffs</li>
+                </ul>
+              </li>
+              <li><a href="http://www.overpass-api.de/">Overpass API</a> aimed for queries
+                <ul>
+                  <li>User interface to create queries: <a href="http://overpass-turbo.eu/">Overpass Turbo</a></li>
+                </ul>
+              </li>
+              <li><a href="https://taginfo.openstreetmap.org/">taginfo</a>:
+              API for labels usage statistics</li>
+              <li><a href="http://nominatim.openstreetmap.org/">Nominatim</a>: geocoder</li>
+              <li>Other providers using OSM data like Mapbox, Mapzen, OSRM, etc.</li>
+            </ul>
+          </section>
+
+          <section><img src="imgs/dev/dev-derivates.png" alt="Derivados" class="figure"></section>
+
+          <section>
+            <h2>Renderers</h2>
+            <ul>
+              <li><em>planet</em> is dumped into a <a href="http://postgis.net">PostGIS</a> database</li>
+              <li><a href="http://mapnik.org/">Mapnik</a> library is used<br/> along with an Apache module: <a href="https://wiki.openstreetmap.org/wiki/Mod_tile">mod_tile</a></li>
+            </ul>
+          </section>
+
+          <section><img src="imgs/dev/dev-all.png" alt="Todo" class="figure"></section>
+        </section>
+        <!-- FIN OSM para desarrolladores-->
+
+        <!-- Ejemplos de mapas -->
+        <section>
+
+          <section>
+            <h2>Fifth part</h2>
+            <h3> Who does not love maps?</h3>
+          </section>
+          <section>
+            <h2>Official</h2>
+            <a href="http://www.openstreetmap.org/#map=16/36.8343/-2.4619">
+              <img src="imgs/maps/01-standar.png" alt="Oficial"></a>
+          </section>
+          <section>
+            <h2>Biking</h2>
+            <a href="http://www.openstreetmap.org/#map=16/36.8343/-2.4619&layers=C">
+            <img src="imgs/maps/02-cycle.png" alt="Ciclismo"></a>
+          </section>
+          <section>
+            <h2>Transport</h2>
+            <a href="http://www.openstreetmap.org/#map=16/36.8343/-2.4619&layers=T">
+            <img src="imgs/maps/03-transport.png" alt="Transporte"></a>
+          </section>
+          <section>
+            <h2>HOT</h2>
+            <a href="http://www.openstreetmap.org/#map=16/36.8343/-2.4619&layers=H">
+            <img src="imgs/maps/04-hot.png" alt="HOT"></a>
+          </section>
+
+          <section>
+            <h2>But this is just the beginning</h2>
+          </section>
+
+          <section>
+            <h2>Stamen</h2>
+          </section>
+          <section>
+            <h2>Watercolor</h2>
+            <a href="http://maps.stamen.com/watercolor/#15/36.8361/-2.4610">
+            <img src="imgs/maps/09-watercolor.png" alt="Watercolor"></a>
+          </section>
+          <section>
+            <h2>Toner</h2>
+            <a href="http://maps.stamen.com/toner/#15/36.8361/-2.4610">
+            <img src="imgs/maps/10-toner.png" alt="Toner"></a>
+          </section>
+
+          <section>
+            <h2>Mapbox</h2>
+          </section>
+          <section class="bookmark">
+            <h2>Pinterest style</h2>
+            <img src="imgs/maps/11-pinterest.png" alt="Pinterest">
+          </section>
+          <section class="bookmark">
+            <h2>Foursquare style</h2>
+            <img src="imgs/maps/13-foursquare.png" alt="Foursquare">
+          </section>
+          <section>
+            <h2>Random</h2>
+            <a href="https://a.tiles.mapbox.com/v3/saman.h6ek9086/page.html?secure=1#16/36.8332/-2.4610">
+            <img src="imgs/maps/12-random.png" alt="Random"></a>
+          </section>
+
+          <section>
+            <h2>CARTO</h2>
+          </section>
+
+          <section class="bookmark">
+            <h2>Positron</h2>
+            <img src="imgs/maps/positron.png" alt="Positron">
+          </section>
+
+          <section class="bookmark">
+            <h2>Dark Matter</h2>
+            <img src="imgs/maps/dark-matter.png" alt="Dark Matter">
+          </section>
+
+        </section>
+
+        <!-- Cierre -->
+        <section>
+          <section>
+            <h1>Thanks!</h1>
+            <p>
+              <a href="http://jorgesanz.net">Jorge Sanz</a> · <a href="http://twitter.com/xurxosanz">@xurxosanz</a><br/>
+              <a href="https://gist.github.com/jsanz/3afcea05186f6a3667a5">Links and resources</a><br/>
+              <span class="monospace">
+              <a href="http://bit.ly/jsanz-osm">http://bit.ly/jsanz-osm</a>
+              </span>
+            </p>
+
+            <img src="imgs/thanks.gif" alt="Thanks!" style="width:60%;">
+          </section>
+          <section>
+            <h2>License</h2>
+
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+              <img alt="Creative Commons License" style="border-width:0"
+                src="imgs/cc-by-sa.png" />
+            </a><br />
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource"
+              property="dct:title" rel="dct:type">
+                OSM no es un mapa, es una base de datos</span> by
+                <a xmlns:cc="http://creativecommons.org/ns#"
+                  href="http://jsanz.github.io/slides-elhackaton-osm/#"
+                  property="cc:attributionName"
+                  rel="cc:attributionURL">Jorge Sanz</a>
+                is licensed under a
+                  <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                    Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+          </section>
+        </section>
+
+
+      </div>
+
+    </div>
+
+    <script src="../reveal.js/lib/js/head.min.js"></script>
+    <script src="../reveal.js/js/reveal.js"></script>
+    <script src="../scripts/jquery-2.1.0.min.js"></script>
+    <script src="../scripts/hs/highlight.pack.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        slideNumber: true,
+        mouseWheel: true,
+
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '../scripts/hs/highlight.plugin.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+
+      $('section.bookmark h2').prepend('<a href="https://gist.github.com/jsanz/9648322"><img src="../css/bookmark.png"></a>');
+
+    </script>
+
+  </body>
+</html>
